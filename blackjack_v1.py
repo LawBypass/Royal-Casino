@@ -1,9 +1,9 @@
 # jeu blackjack + histoire (si je suis assez motive) 
 #l'utilisation de l'ia est note avec des commentaires + j'ai utilise l'ia pour comprendre le fonctionnement du jeu blackjack
-#les libraries dont on a besoin (ou pas, dans cette version pas besoin de pygame et math)
+#les libraries dont on a besoin 
 import random
-import pygame
-import math
+#import pygame
+#import math
 
 # variables boolennes qu'on va utiliser apres
 perdu = False
@@ -18,36 +18,35 @@ cartes = [2, 3, 4, 5, 6, 7, 8, 9, 10, "As", "Valet", "Roi", "Dame"]
 valeurs_cartes = {"Valet": 10, "Dame": 10,  "Roi": 10,  "As": 11}
 
 
-#soit x la valeur du debut / on va def le truc pour calculer les points
 #cette partie jusqu'a return x est faite a l'aide de l'IA, j'ai eu du mal a attribuer 2 valeurs a l'as 
-def calculer_points(main):
+def calculer_points(cartes_main_joueur):
     x = 0
     nombre_as = 0
 
-    for carte in main:
-        if isinstance(carte, int):
-            x += carte
-        elif carte == "As":
-            x += 11
-            nombre_as += 1
-        else:
-            x += valeurs_cartes[carte]
-    while x > 21 and nombre_as > 0:
-        x -= 10
-        nombre_as -= 1
-    return x
+    for carte in cartes_main_joueur:
+        if isinstance(carte, int):              #isinstance verifie si la carte est un int
+            x += carte                          #ajoute a x la valeur de la carte (addition)
+        elif carte == "As":                     #si la carte est un as,
+            x += 11                             # on ajoute 11                                    
+            nombre_as += 1                      # 0 + 1 = 1 donc le nombre as vaut 1 
+        else:                                                                     
+            x += valeurs_cartes[carte]          # on donne a x une valeur de valeurs_cartes 
+    while x > 21 and nombre_as > 0:             
+        x -= 10                                 #retire 10 pts pour faire passer un as de 11 a 1
+        nombre_as -= 1                          #diminue nombre_as de 1 -1 
+    return x                                    
 
 
 #on va donner l'option au joueur de rejouer 
-rejouer = "oui"
+rejouer = "oui" 
 
-while rejouer == "oui":                   #toute autre valeur que oui va arreterla boucle, dont non. 
+while rejouer == "oui":                   #toute autre valeur que oui va arreter la boucle.
 
-    # variable boolenne qu'on va utiliser apres
-    perdu = False
+
+    
 
     #la totalite des 52 cartes du paquet 
-    paquet_52_cartes = [2, 3, 4, 5, 6, 7, 8, 9, 10, "As", "Valet", "Roi", "Dame", 2, 3, 4, 5, 6, 7, 8, 9, 10, "As", "Valet", "Roi", "Dame", 2, 3, 4, 5, 6, 7, 8, 9, 10, "As", "Valet", "Roi", "Dame", 2, 3, 4, 5, 6, 7, 8, 9, 10, "As", "Valet", "Roi", "Dame"]
+    paquet_52_cartes = [2, 3, 4, 5, 6, 7, 8, 9, 10, "As", "Valet", "Roi", "Dame"]*4 
 
 
     # ca melange les cartes avec .shuffle() 
@@ -93,7 +92,7 @@ while rejouer == "oui":                   #toute autre valeur que oui va arreter
 
         while choix not in ["hit", "stand"]:                # partie IA utilise auparavant 
             print("Choix invalide !")                       #
-            choix = input("Tu veux hit ou stand ? ").lower()    #
+            choix = input("Tu veux hit ou stand ? ").lower()#
 
     if choix == "stand" and not perdu: # continuer SSI  perdu = false 
         print("hm ok tu restes")
@@ -116,13 +115,13 @@ while rejouer == "oui":                   #toute autre valeur que oui va arreter
     if perdu:
         pass    # si on a perdu on arrete simplement
     elif points > 21:
-        print("t'es trop nul haha tu as perdu")
+        print("trop nul")
     elif points_croupier > 21:
         print("Yooo, tu as gagne !")
     elif points > points_croupier:
-        print('tu as gagne')
+        print('Yooo, tu as gagne !')
     elif points < points_croupier:
-        print("nullll tu as perdu hhahaha")
+        print("trop nul")
     else:
         print("Egalite !")
 
