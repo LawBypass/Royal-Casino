@@ -1,3 +1,5 @@
 # Casino ROYAL
-petit jeu de gambling pour notre projet nsi 
+petit jeu style casino
+
+20/20 svp
 
