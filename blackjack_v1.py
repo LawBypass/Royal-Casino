@@ -1,6 +1,6 @@
 # jeu blackjack + histoire (si je suis assez motive) 
 #l'utilisation de l'ia est note avec des commentaires + j'ai utilise l'ia pour comprendre le fonctionnement du jeu blackjack
-#les libraries dont on a besoin (ou pas)
+#les libraries dont on a besoin (ou pas, dans cette version pas besoin de pygame et math)
 import random
 import pygame
 import math
