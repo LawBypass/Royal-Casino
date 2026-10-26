@@ -1,5 +1,5 @@
 #test fait 100% avec l'ia pour avoir une idee de comment faire l'interface graphique pour le jeu blackjack.
-# il nous manque cependant le menu principal pour les autres jeux (mes camarades n'ont rien foutu) 
+# il nous manque cependant le menu principal pour les autres jeux (mes camarades n'ont rien foutu, euh c'est pas vrai) 
 #en raison de la difficulte de l'interface graphique, ele va etre probablement faite avec l'ia
 
 # jeu blackjack + histoire (si je suis assez motive)
