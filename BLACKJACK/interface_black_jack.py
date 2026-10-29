@@ -13,7 +13,7 @@ import math
 
 pygame.init()
 
-# Creer la fenetre
+# Creation de la fenetre 
 LARGEUR = 1000
 HAUTEUR = 700
 ecran = pygame.display.set_mode((LARGEUR, HAUTEUR))
