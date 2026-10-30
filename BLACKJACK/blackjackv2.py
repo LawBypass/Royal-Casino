@@ -1,37 +1,47 @@
 
-# jeu blackjack 
+# jeu blackjack + histoire (si je suis assez motive)
 # J'ai utilise l'IA pour comprendre le fonctionnement du blackjack
-# et pour m'aider a creer l'interface graphique.
+# et pour m'aider a creer l'interface graphique et bcp de choses avec pygame surtout les modules.
 
 import random
 import pygame
 import math
 
+
+#initialise les modules de Pygame necessaires au fonctionnement du jeu.
 pygame.init()
 
-# Creation de la fenetre 
+
+
+# Creer la fenetre 1000x700
 LARGEUR = 1000
 HAUTEUR = 700
+#surface jeu par la variable ecran
 ecran = pygame.display.set_mode((LARGEUR, HAUTEUR))
-pygame.display.set_caption("Mon Blackjack")
 
-# Les couleurs
+#titre du jeu
+pygame.display.set_caption("Jeu blackjack")
+
+# chaque couleur est definie par 3 nombres, rouge vert bleu.
 VERT = (20, 110, 60)
 VERT_FONCE = (12, 75, 42)
 BLANC = (255, 255, 255)
 NOIR = (20, 20, 20)
 OR = (240, 190, 70)
-GRIS = (190, 190, 190)
+#GRIS = (190, 190, 190) pas besoin de l'utiliser
 BLEU = (40, 80, 160)
 
 # Les polices
+# arial = nom de la police, 48 la taille, bold = gras
 police_titre = pygame.font.SysFont("arial", 48, bold=True)
 police_texte = pygame.font.SysFont("arial", 27)
 police_carte = pygame.font.SysFont("arial", 27, bold=True)
 police_resultat = pygame.font.SysFont("arial", 32, bold=True)
 police_bouton = pygame.font.SysFont("arial", 25, bold=True)
 
-horloge = pygame.time.Clock()
+
+# Cree une horloge pour limiter la frequence de la boucle principale
+horloge = pygame.time.Clock() 
 
 # Les differentes cartes
 cartes = [
@@ -48,7 +58,6 @@ valeurs_cartes = {
 }
 
 # Fonction pour calculer les points
-# Cette partie est inspiree de mon code precedent.
 # L'As peut valoir 1 ou 11 selon la situation.
 
 def calculer_points(main):
@@ -56,47 +65,55 @@ def calculer_points(main):
     nombre_as = 0
 
     for carte in main:
-        if isinstance(carte, int):
-            x += carte
-        elif carte == "As":
-            x += 11
-            nombre_as += 1
-        else:
-            x += valeurs_cartes[carte]
+        if isinstance(carte, int):  #isinstance verifie si la carte est un int
+            x += carte              #ajoute a x la valeur de la carte (addition)
+        elif carte == "As":         #si la carte est un as,
+            x += 11                 # on ajoute 11        
+            nombre_as += 1          # 0 + 1 = 1 donc le nombre as vaut 1 
+        else:   
+            x += valeurs_cartes[carte] # on donne a x une valeur de valeurs_cartes 
 
     while x > 21 and nombre_as > 0:
-        x -= 10
-        nombre_as -= 1
+        x -= 10                         #retire 10 pts pour faire passer un as de 11 a 1
+        nombre_as -= 1                  #diminue nombre_as de 1 -1             
 
-    return x
+    return x                            # donne x 
 
 
 # Les boutons de l'interface
+#.rect = rectangle(position horizontale x, position verticale y,largeur,hauteur)
 bouton_hit = pygame.Rect(300, 615, 170, 55)
 bouton_stand = pygame.Rect(530, 615, 170, 55)
 bouton_rejouer = pygame.Rect(390, 615, 220, 55)
 
 
-# Fonction pour dessiner un bouton
+# Fonction pour dessiner un bouton avec le texte, le rect. (position et dimension) + la couleur
 def dessiner_bouton(texte, rectangle, couleur):
+    
+    #on dessine le rect. avec pygame.draw. border radius arrondit les coins du rectangle
     pygame.draw.rect(ecran, couleur, rectangle, border_radius=12)
+    # le contour est BLANC et le nb 2 signifie l'epaisseur en pixel. 
     pygame.draw.rect(ecran, BLANC, rectangle, 2, border_radius=12)
-
+    
+    #Cette ligne transforme le texte en une surface graphique que Pygame peut afficher.
     surface_texte = police_bouton.render(texte, True, BLANC)
+    #Cette instruction calcule un rectangle correspondant au texte,
+    # puis place son centre au meme endroit que le centre du bouton.
     position = surface_texte.get_rect(center=rectangle.center)
+    # blit permet de dessiner une surface sur une autre. le programme affiche le texte sur la fenetre
     ecran.blit(surface_texte, position)
 
 
 # Fonction pour dessiner une carte
-def dessiner_carte(x, y, valeur, cachee=False):
-    largeur_carte = 90
-    hauteur_carte = 125
+def dessiner_carte(x, y, valeur, cachee=False):     #dessiner une carte sur l'ecran avec ses coordonnees, la valeur de la carte et en indiquant si la carte doit etre cachee
+    largeur_carte = 90                              
+    hauteur_carte = 125 
 
-    rectangle = pygame.Rect(
-        x, y, largeur_carte, hauteur_carte
+    rectangle = pygame.Rect(                    #on dessine le rectangle donc la carte
+        x, y, largeur_carte, hauteur_carte      
     )
 
-    pygame.draw.rect(
+    pygame.draw.rect(                               
         ecran,
         BLANC if not cachee else BLEU,
         rectangle,
@@ -160,12 +177,28 @@ def dessiner_main(main, y, cacher_deuxieme=False):
 rejouer = True
 jeu_en_cours = True
 
+# Ajouter le solde et la mise
+solde = 100
+mise = 10
+mise_reglee = False
+
 
 # Demarrer une nouvelle partie
 def nouvelle_partie():
     global paquet_52_cartes
     global main_joueur, main_croupier
     global etat, resultat, perdu
+    global solde, mise_reglee
+
+    # Verifier si le joueur a assez d'argent
+    if solde < mise:
+        etat = "fin"
+        resultat = "Solde insuffisant !"
+        return
+
+    # Retirer la mise au debut de la partie
+    solde -= mise
+    mise_reglee = False
 
     perdu = False
     resultat = ""
@@ -193,8 +226,25 @@ def nouvelle_partie():
     # Verifier si le joueur a depasse 21
     if calculer_points(main_joueur) > 21:
         perdu = True
-        etat = "fin"
-        resultat = "Tu as depasse 21 !"
+        determiner_resultat()
+
+
+# Regler la mise a la fin de la partie
+def regler_mise():
+    global solde, mise_reglee
+
+    if mise_reglee:
+        return
+
+    if resultat == "Egalite !":
+        solde += mise
+    elif resultat in [
+        "Bravo, tu as gagne !",
+        "Le croupier depasse 21 : tu gagnes !"
+    ]:
+        solde += mise * 2
+
+    mise_reglee = True
 
 
 # Determiner le gagnant
@@ -216,6 +266,9 @@ def determiner_resultat():
         resultat = "Egalite !"
 
     etat = "fin"
+
+    # Ajouter les gains ou rendre la mise
+    regler_mise()
 
 
 # Tour du croupier
@@ -269,8 +322,7 @@ while jeu_en_cours:
 
                             if points > 21:
                                 perdu = True
-                                resultat = "Tu as depasse 21 !"
-                                etat = "fin"
+                                determiner_resultat()
 
                     elif bouton_stand.collidepoint(position_souris):
                         tour_croupier()
@@ -338,6 +390,17 @@ while jeu_en_cours:
         BLANC
     )
     ecran.blit(surface_points_joueur, (80, 525))
+
+    # Afficher le solde et la mise
+    texte_solde = police_texte.render(
+        "Solde : " + str(solde) + " euros", True, OR
+    )
+    ecran.blit(texte_solde, (700, 525))
+
+    texte_mise = police_texte.render(
+        "Mise : " + str(mise) + " euros", True, OR
+    )
+    ecran.blit(texte_mise, (700, 560))
 
     # Afficher les boutons selon l'etat du jeu
     if etat == "joueur":
