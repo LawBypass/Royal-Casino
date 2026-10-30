@@ -4,7 +4,7 @@
 Projet de mini casino virtuel jouable en local, utilisant des jetons fictifs pour miser et gagner.
 
 ##  Les jeux
--  **Bandit manchot** : aligner trois motifs identiques.
+-  **Machine à sous** : aligner plusieurs motifs identiques.
 -  **Roulette** : miser sur un résultat.
 -  **Blackjack modifié** : se rapprocher de 21 sans le dépasser.
 
