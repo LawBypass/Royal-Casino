@@ -3,13 +3,9 @@
 # et pour m'aider a creer l'interface graphique et bcp de choses avec pygame surtout les modules.
 #presence excessive de commentaires en raison de la difficulte de comprehension
 
-
-#importe le module pour melanger les cartes aleatoirement
 import random
-#importe pygame pour creer l'interface graphique du jeu
 import pygame
-#importe le module math, meme s'il n'est pas utilise dans cette version
-import math
+#import math (pas besoin pour le moment)
 
 
 #initialise les modules de pygame necessaires au fonctionnement du jeu.
@@ -33,7 +29,6 @@ VERT_FONCE = (12, 75, 42)
 BLANC = (255, 255, 255)
 NOIR = (20, 20, 20)
 OR = (240, 190, 70)
-#gris = (190, 190, 190) pas utilise
 BLEU = (40, 80, 160)
 
 # les polices
@@ -191,8 +186,7 @@ def dessiner_main(main, y, cacher_deuxieme=False):      #y = pos verticale et la
         )
 
 
-# variables du jeu (boolennes)
-rejouer = True
+# variable du jeu (boolenne)
 jeu_en_cours = True
 
 
