@@ -1,4 +1,4 @@
-
+#presence excessive de commentaires en raison de la difficulte de comprehension
 # jeu blackjack + histoire (si je suis assez motive)
 # J'ai utilise l'IA pour comprendre le fonctionnement du blackjack
 # et pour m'aider a creer l'interface graphique et bcp de choses avec pygame surtout les modules.
