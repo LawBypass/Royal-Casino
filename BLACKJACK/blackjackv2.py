@@ -18,9 +18,7 @@ pygame.init()
 
 
 # creer la fenetre 1000x700
-#definit la largeur de la fenetre en pixels
 LARGEUR = 1000
-#definit la hauteur de la fenetre en pixels
 HAUTEUR = 700
 #surface jeu par la variable ecran
 ecran = pygame.display.set_mode((LARGEUR, HAUTEUR))
