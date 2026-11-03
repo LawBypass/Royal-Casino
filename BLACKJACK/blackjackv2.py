@@ -315,10 +315,10 @@ while jeu_en_cours:  # repete le code tant que le jeu est ouvert
 
             if etat == "menu": 
                 # Dans le menu le joueur peut lancer une partie avec la mise saisie
-                if bouton_jouer.collidepoint(position_souris):
+                if bouton_jouer.collidepoint(position_souris): #collidepoint() verifie si les coordonnees de la souris sont a l interieur du rectangle 
                     # On accepte uniquement un nombre entre 1 et 2000,
                     # et le joueur ne peut pas miser plus que son solde.
-                    if mise.isdigit() and 1 <= int(mise) <= 2000 and int(mise) <= solde:
+                    if mise.isdigit() and 1 <= int(mise) <= 2000 and int(mise) <= solde:  
                         message_menu = ""
                         mise = int(mise)       # transforme le texte saisi en nombre
                         solde -= mise           # la mise est retiree avant de jouer
@@ -331,13 +331,13 @@ while jeu_en_cours:  # repete le code tant que le jeu est ouvert
 
             elif etat == "joueur":                              #
                 if bouton_hit.collidepoint(position_souris):
-                    if len(paquet_52_cartes) > 0:
-                        main_joueur.append(paquet_52_cartes.pop())
-                        points = calculer_points(main_joueur)
-                        if points > 21:
-                            perdu = True
+                    if len(paquet_52_cartes) > 0:                   #on verifie qu'il y a plus de cartes dans le paquet
+                        main_joueur.append(paquet_52_cartes.pop())   #on donne a la main du joueur une carte du paquet 
+                        points = calculer_points(main_joueur)        #on calcule les points de la main du joueur
+                        if points > 21:                             # si les points sont superieurs a 21
+                            perdu = True                      
                             resultat = "Tu as depasse 21 !"
-                            etat = "fin"
+                            etat = "fin"                            # fin du jeu 
 
                 elif bouton_stand.collidepoint(position_souris):
                     tour_croupier()
