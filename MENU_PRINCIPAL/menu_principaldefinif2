@@ -1,0 +1,163 @@
+
+import tkinter as tk
+
+# ----- La taille de la fenêtre -----
+LARGEUR = 1152
+HAUTEUR = 648
+
+# ----- Les couleurs et la police -----
+FOND = "#14171f"
+OR = "#d4af37"
+CLAIR = "#f5d77a"
+ROUGE = "#c8102e"
+POLICE = "DM Sans"
+
+# ----- Le gain du joueur -----
+gains = 2000
+
+
+# ----- Les fonctions -----
+def mettre_a_jour():
+    """Met à jour le texte du gains."""
+    canvas.itemconfig(texte_gains, text="Gains : " + str(gains))
+
+
+def message(texte, couleur=CLAIR):
+    """Affiche un message d'information."""
+    canvas.itemconfig(texte_message, text=texte, fill=couleur)
+
+
+def roulette():
+    message("Roulette : bientôt !")
+
+
+def machine():
+    message("Machine à sous : bientôt !")
+
+
+def blackjack():
+    message("Blackjack : bientôt !")
+
+
+def quitter():
+    fenetre.destroy()
+
+
+def creer_bouton(x, texte, commande):
+    bouton = tk.Button(
+        fenetre,
+        text=texte,
+        font=(POLICE, 16, "bold"),
+        bg=OR,
+        fg="black",
+        width=14,
+        command=commande
+    )
+    canvas.create_window(x, 522, window=bouton)
+
+
+# ----- La fenêtre et la zone de dessin -----
+fenetre = tk.Tk()
+fenetre.title("Royal Casino")
+fenetre.geometry("1152x648")
+
+canvas = tk.Canvas(
+    fenetre,
+    width=LARGEUR,
+    height=HAUTEUR,
+    bg=FOND,
+    highlightthickness=0
+)
+canvas.pack()
+
+# ----- Le cadre autour de la fenêtre -----
+canvas.create_rectangle(
+    10, 10, LARGEUR - 10, HAUTEUR - 10,
+    outline=OR, width=4
+)
+canvas.create_rectangle(
+    20, 20, LARGEUR - 20, HAUTEUR - 20,
+    outline=ROUGE, width=2
+)
+
+# ----- Les lumières -----
+for i in range(41):
+    x = 76 + i * 25
+
+    if i % 2 == 0:
+        couleur_lumiere = ROUGE
+    else:
+        couleur_lumiere = CLAIR
+
+    canvas.create_oval(
+        x - 6, 39, x + 6, 51,
+        fill=couleur_lumiere, outline="black"
+    )
+    canvas.create_oval(
+        x - 6, 597, x + 6, 609,
+        fill=couleur_lumiere, outline="black"
+    )
+
+# ----- Le gains -----
+canvas.create_rectangle(
+    900, 62, 1110, 96,
+    fill="black", outline=OR, width=2
+)
+
+texte_gains = canvas.create_text(
+    1005, 79,
+    text="",
+    font=(POLICE, 13, "bold"),
+    fill="white"
+)
+
+# ----- La couronne et le titre -----
+canvas.create_text(
+    576, 115, text="♛",
+    font=(POLICE, 54), fill=OR
+)
+
+canvas.create_text(
+    576, 190, text="ROYAL CASINO",
+    font=(POLICE, 52, "bold"), fill=OR
+)
+
+# ----- La décoration et le sous-titre -----
+canvas.create_line(376, 240, 556, 240, fill=ROUGE, width=2)
+canvas.create_text(576, 240, text="♦", font=(POLICE, 16), fill=ROUGE)
+canvas.create_line(596, 240, 776, 240, fill=ROUGE, width=2)
+
+canvas.create_text(
+    576, 275, text="Bienvenue !",
+    font=(POLICE, 15, "italic"), fill=CLAIR
+)
+
+canvas.create_text(
+    576, 295, text="Que la chance soit avec vous !",
+    font=(POLICE, 15, "italic"), fill=CLAIR
+)
+
+# ----- Les symboles de cartes -----
+canvas.create_text(496, 345, text="♠", font=(POLICE, 36), fill="white")
+canvas.create_text(549, 345, text="♥", font=(POLICE, 36), fill=ROUGE)
+canvas.create_text(603, 345, text="♦", font=(POLICE, 36), fill=ROUGE)
+canvas.create_text(656, 345, text="♣", font=(POLICE, 36), fill="white")
+
+# ----- Les boutons des jeux -----
+creer_bouton(216, "ROULETTE", roulette)
+creer_bouton(456, "MACHINE À SOUS", machine)
+creer_bouton(696, "BLACKJACK", blackjack)
+creer_bouton(936, "QUITTER", quitter)
+
+# ----- Le message d'information -----
+texte_message = canvas.create_text(
+    576, 402,
+    text="Choisissez votre jeu !",
+    font=(POLICE, 13),
+    fill=CLAIR
+)
+
+# ----- Lancement -----
+mettre_a_jour()
+fenetre.mainloop()
+
