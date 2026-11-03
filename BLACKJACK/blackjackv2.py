@@ -217,7 +217,7 @@ def nouvelle_partie():
     global etat, resultat, perdu, gain_regle, message_gain
 
     # chaque nouvelle partie doit pouvoir regler ses gains une seule fois
-    gain_regle = False
+    gain_regle = False               
     message_gain = ""
     perdu = False
     resultat = "" #
@@ -313,8 +313,8 @@ while jeu_en_cours:  # repete le code tant que le jeu est ouvert
         if evenement.type == pygame.MOUSEBUTTONDOWN and evenement.button == 1:
             position_souris = evenement.pos
 
-            if etat == "menu":
-                # Dans le menu, le joueur peut lancer une partie avec la mise saisie.
+            if etat == "menu": 
+                # Dans le menu le joueur peut lancer une partie avec la mise saisie
                 if bouton_jouer.collidepoint(position_souris):
                     # On accepte uniquement un nombre entre 1 et 2000,
                     # et le joueur ne peut pas miser plus que son solde.
@@ -329,7 +329,7 @@ while jeu_en_cours:  # repete le code tant que le jeu est ouvert
                     # Le bouton dans le menu remet simplement la mise proposee par defaut.
                     mise = "100"
 
-            elif etat == "joueur":
+            elif etat == "joueur":                              #
                 if bouton_hit.collidepoint(position_souris):
                     if len(paquet_52_cartes) > 0:
                         main_joueur.append(paquet_52_cartes.pop())
