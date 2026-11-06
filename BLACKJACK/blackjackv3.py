@@ -325,7 +325,7 @@ while jeu_en_cours:
             else:
                 type_gain = "defaite"
 
-            argent_rendu = min(int(mise * multiplicateurs_gains[type_gain]), 2000 - solde)
+            argent_rendu = int(mise * multiplicateurs_gains[type_gain])
             solde += argent_rendu
 
             if type_gain == "defaite":
@@ -399,5 +399,5 @@ while jeu_en_cours:
     pygame.display.flip()
     horloge.tick(60)
 
-# Fermeture de Pygame
+# quitter
 pygame.quit()
