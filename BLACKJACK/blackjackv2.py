@@ -1,4 +1,4 @@
-# jeu blackjack + histoire (si je suis assez motive)
+#jeu blackjack + histoire (si je suis assez motive)
 # j'ai utilise l'ia pour comprendre le fonctionnement du blackjack
 # et pour m'aider a creer l'interface graphique et bcp de choses avec pygame surtout les modules.
 #presence excessive de commentaires en raison de la difficulte de comprehension
@@ -401,7 +401,7 @@ while jeu_en_cours:  # repete le code tant que le jeu est ouvert
                 type_gain = "defaite"
 
             # Formule unique : mise x multiplicateur, sans depasser le solde maximum.
-            argent_rendu = min(int(mise * multiplicateurs_gains[type_gain]), 2000 - solde)
+            argent_rendu = int(mise * multiplicateurs_gains[type_gain])
             solde += argent_rendu
 
             if type_gain == "defaite":
